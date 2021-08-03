@@ -22,12 +22,13 @@ def getMedal(roomid):    # 直接获取勋章
         url = 'https://live.bilibili.com/' + str(roomid)  # 直播间url
         html = getHTML(url)  # 获得直播间HTML
         match = regex_medal.findall(html)  # 通过正则表达式匹配查询结果，获取粉丝勋章名称
-        if len(match):  # 如果该直播间开通了粉丝勋章且粉丝榜有粉丝
+        if len(match):  # 如果该直播间开通了粉丝勋章
             return match[0]  # 返回获取粉丝勋章名称
         else:
             return ''  # 否则返回空字符串
-    except:
-        return AssertionError  # 异常处理
+    except:# 异常处理
+        with open('err.txt', 'a', encoding='utf-8') as logfile:# 在"err.txt"中添加错误记录
+            print('房间' + str(roomid) + '爬取失败', file=logfile)
 
 # 程序入口
 regex_medal = re.compile(r'(?<="medal_name":")[^"]*')  # 用于匹配粉丝勋章的正则表达式
@@ -42,12 +43,12 @@ with open('log.txt', 'w', encoding='utf-8') as logfile:  # 清空"log.txt"
     print('爬取开始', file=logfile)
 with open('medal.txt', 'w', encoding='utf-8') as medalfile:  # 清空"medal.txt"
     print('勋章字典：', file=medalfile)
-with open('medalfst.txt', 'w', encoding='utf-8') as medalfstfile:  # 清空"fst.txt"
+with open('medalfst.txt', 'w', encoding='utf-8') as medalfstfile:  # 清空"medalfst.txt"
     print('勋章粉丝团：', file=medalfstfile)
 for i in range(num1, num2):  # 遍历直播间
-    # 先调用getRuid()函数获取该直播间主播id，再用房间号和主播id为参数调用getMedal()获取粉丝勋章
+    # 原getRuid()函数变更为getMedal()直接获取粉丝勋章
     medalname = getMedal(i)
-    if medalname:  # 如果该直播间开通了粉丝勋章
+    if medalname:
         # 判断默认粉丝勋章"粉丝团"
         if medalname == "粉丝团":
             WJ = "medalfst.txt"
