@@ -38,6 +38,8 @@ with open('medal.txt', 'w', encoding='utf-8') as medalfile:  # 清空"medal.txt"
     print('勋章字典：', file=medalfile)
 with open('medalfst.txt', 'w', encoding='utf-8') as medalfstfile:  # 清空"medalfst.txt"
     print('勋章粉丝团：', file=medalfstfile)
+with open('err.txt', 'w', encoding='utf-8') as errfile:  # 清空"err.txt"
+    print('爬取开始', file=errfile)
 for i in range(num1, num2):  # 遍历直播间
     # 原getRuid()函数变更为getMedal()直接获取粉丝勋章
     medalname = getMedal(i)
