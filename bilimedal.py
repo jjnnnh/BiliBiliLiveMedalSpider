@@ -13,6 +13,7 @@ def getMedal(roomid):    # 与getHTML()函数合并，直接获取勋章
         html = requests.get(url, headers=headers)  # 提交请求，并获得响应
         html.encoding = 'utf-8'  # b站直播采用utf-8编码
         html.raise_for_status  # 如果状态码不为200即爬取失败则产生异常
+        html = html.text  # 返回网页HTML
         match = regex_medal.findall(html)  # 通过正则表达式匹配查询结果，获取粉丝勋章名称
         if len(match):  # 如果该直播间开通了粉丝勋章
             return match[0]  # 返回获取粉丝勋章名称
